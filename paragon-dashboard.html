@@ -1,0 +1,1102 @@
+<title>Paragon Control Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap">
+<style>
+:root{
+  --ground:#F2F1EE;
+  --surface:#FAF9F7;
+  --surface-sunk:#EBE9E4;
+  --ink:#1C1A18;
+  --ink-soft:#57534D;
+  --ink-mute:#8A857D;
+  --rule:#D6D2CB;
+  --rule-strong:#BAB5AC;
+  --accent:#6B1D24;
+  --accent-soft:#F0E4E4;
+  --ontrack:#4F6249;
+  --atrisk:#8A6A16;
+  --late:#A24A1B;
+  --blocked:#3E5563;
+  --ontrack-bg:#E7EBE4;
+  --atrisk-bg:#F2EBD8;
+  --late-bg:#F4E6DC;
+  --blocked-bg:#E2E8EB;
+  --focus:#6B1D24;
+  --sans:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#141311;--surface:#1D1C19;--surface-sunk:#111010;
+    --ink:#EDEAE4;--ink-soft:#B3ADA4;--ink-mute:#857F76;
+    --rule:#34322D;--rule-strong:#4A473F;
+    --accent:#B84A52;--accent-soft:#2E1D1E;
+    --ontrack:#8FA382;--atrisk:#C9A43F;--late:#D4763C;--blocked:#7B96A5;
+    --ontrack-bg:#212620;--atrisk-bg:#2A2519;--late-bg:#2C211A;--blocked-bg:#1C2327;
+    --focus:#B84A52;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141311;--surface:#1D1C19;--surface-sunk:#111010;
+  --ink:#EDEAE4;--ink-soft:#B3ADA4;--ink-mute:#857F76;
+  --rule:#34322D;--rule-strong:#4A473F;
+  --accent:#B84A52;--accent-soft:#2E1D1E;
+  --ontrack:#8FA382;--atrisk:#C9A43F;--late:#D4763C;--blocked:#7B96A5;
+  --ontrack-bg:#212620;--atrisk-bg:#2A2519;--late-bg:#2C211A;--blocked-bg:#1C2327;
+  --focus:#B84A52;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--ground);color:var(--ink);
+  font-family:var(--sans);font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+h1,h2,h3,h4,p,ul,ol,figure{margin:0}
+ul{padding:0;list-style:none}
+button{font:inherit;color:inherit;background:none;border:none;padding:0;cursor:pointer}
+table{border-collapse:collapse;width:100%}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- Title block ---------- */
+.titleblock{
+  border-bottom:1px solid var(--rule-strong);
+  background:var(--surface);
+}
+.tb-inner{
+  max-width:1240px;margin:0 auto;padding:20px 20px 0;
+}
+.tb-top{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;justify-content:space-between}
+.brandmark{display:flex;align-items:baseline;gap:10px}
+.brandmark .rd{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  color:var(--accent);font-weight:500;text-transform:uppercase;
+}
+.projname{font-family:var(--serif);font-weight:300;font-size:40px;line-height:1;letter-spacing:-.01em;text-wrap:balance}
+.projsub{color:var(--ink-soft);font-size:13px;margin-top:6px}
+.tb-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ctrl{
+  display:flex;align-items:center;gap:8px;
+  border:1px solid var(--rule-strong);background:var(--ground);
+  padding:6px 10px;
+}
+.ctrl label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute)}
+.ctrl select{
+  font:inherit;font-size:13px;color:var(--ink);background:transparent;border:none;
+  padding:0;cursor:pointer;-webkit-appearance:none;appearance:none;padding-right:14px;
+  background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+  background-position:right 4px center,right 0px center;background-size:4px 4px,4px 4px;background-repeat:no-repeat;
+}
+.tb-meta{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);
+  margin:18px 0 0;
+}
+.tb-cell{background:var(--surface);padding:9px 12px}
+.tb-cell dt{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute)}
+.tb-cell dd{margin:3px 0 0;font-size:13.5px;font-weight:500}
+.samplebar{
+  max-width:1240px;margin:0 auto;padding:8px 20px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;
+  font-size:12px;color:var(--ink-soft);
+}
+.samplebar b{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:500}
+
+/* ---------- Shell ---------- */
+.shell{max-width:1240px;margin:0 auto;padding:0 20px 72px;display:grid;gap:28px;grid-template-columns:1fr}
+.shell>*{min-width:0}
+@media (min-width:960px){
+  .shell{grid-template-columns:206px 1fr;gap:36px;padding-top:28px}
+}
+/* index / nav */
+.sheetindex{padding-top:16px}
+@media (min-width:960px){
+  .sheetindex{position:sticky;top:20px;align-self:start;padding-top:0}
+}
+.idx-title{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.idx-list{display:flex;gap:2px;overflow-x:auto;padding:8px 0 2px;scrollbar-width:thin}
+@media (min-width:960px){.idx-list{display:block;overflow:visible;padding:4px 0 0}}
+.idx-btn{
+  display:flex;align-items:baseline;gap:9px;white-space:nowrap;
+  padding:8px 10px;width:100%;text-align:left;border-left:2px solid transparent;
+  color:var(--ink-soft);
+}
+.idx-btn .code{font-family:var(--mono);font-size:10.5px;color:var(--ink-mute);letter-spacing:.04em}
+.idx-btn .name{font-size:13px}
+.idx-btn:hover{background:var(--surface);color:var(--ink)}
+.idx-btn[aria-current="true"]{color:var(--ink);background:var(--surface);border-left-color:var(--accent);font-weight:500}
+.idx-btn[aria-current="true"] .code{color:var(--accent)}
+.idx-flag{
+  margin-left:auto;font-family:var(--mono);font-size:10px;
+  color:var(--late);
+}
+
+/* ---------- Sheet ---------- */
+.sheet{display:grid;gap:26px;min-width:0}
+.sheet[hidden]{display:none}
+.sheethead{border-bottom:1px solid var(--rule-strong);padding-bottom:12px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:baseline}
+.sheethead .code{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--accent)}
+.sheethead h2{font-family:var(--serif);font-weight:300;font-size:27px;line-height:1.1}
+.sheethead .note{color:var(--ink-mute);font-size:12.5px;margin-left:auto}
+
+.block{display:grid;gap:12px;min-width:0}
+.blockhead{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:7px}
+.blockhead h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--ink-soft)}
+.blockhead .count{font-family:var(--mono);font-size:10.5px;color:var(--ink-mute)}
+
+/* phase rail */
+.phaserail{display:flex;gap:0;overflow-x:auto;border:1px solid var(--rule);background:var(--surface)}
+.phase{
+  flex:1 0 132px;padding:12px 14px;border-right:1px solid var(--rule);position:relative;
+}
+.phase:last-child{border-right:none}
+.phase .pn{font-family:var(--mono);font-size:10px;color:var(--ink-mute);letter-spacing:.1em}
+.phase .pname{font-size:13.5px;margin-top:5px;font-weight:500;color:var(--ink-soft)}
+.phase .pdate{font-family:var(--mono);font-size:10.5px;color:var(--ink-mute);margin-top:4px}
+.phase[data-state="done"] .pname{color:var(--ink-mute);font-weight:400}
+.phase[data-state="done"] .pn::after{content:" ✓";color:var(--ontrack)}
+.phase[data-state="now"]{background:var(--accent-soft)}
+.phase[data-state="now"]::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:var(--accent)}
+.phase[data-state="now"] .pname{color:var(--ink);font-weight:600}
+.phase[data-state="now"] .pn{color:var(--accent)}
+
+/* attention tiles */
+.attn{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.attn-tile{background:var(--surface);padding:13px 15px;text-align:left;display:block;border-top:3px solid transparent}
+.attn-tile:hover{background:var(--surface-sunk)}
+.attn-tile[aria-pressed="true"]{background:var(--surface-sunk)}
+.attn-tile .n{font-family:var(--serif);font-size:32px;line-height:1;font-variant-numeric:tabular-nums}
+.attn-tile .l{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);margin-top:7px}
+.attn-tile .s{font-size:12px;color:var(--ink-soft);margin-top:3px}
+.attn-tile[data-kind="late"]{border-top-color:var(--late)}
+.attn-tile[data-kind="late"] .n{color:var(--late)}
+.attn-tile[data-kind="blocked"]{border-top-color:var(--blocked)}
+.attn-tile[data-kind="blocked"] .n{color:var(--blocked)}
+.attn-tile[data-kind="unowned"]{border-top-color:var(--rule-strong)}
+.attn-tile[data-kind="unowned"] .n{color:var(--ink-mute)}
+.attn-tile[data-kind="soon"]{border-top-color:var(--atrisk)}
+.attn-tile[data-kind="soon"] .n{color:var(--atrisk)}
+
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.chip{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:4px 9px;border:1px solid var(--rule-strong);color:var(--ink-soft);background:var(--ground);
+}
+.chip:hover{border-color:var(--ink-mute);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#FAF7F5}
+
+/* item rows */
+.items{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.item{
+  background:var(--surface);display:grid;gap:4px 14px;padding:11px 14px 11px 15px;
+  border-left:3px solid var(--rule-strong);
+  grid-template-columns:1fr;
+}
+@media (min-width:700px){
+  .item{grid-template-columns:1fr 168px 132px 104px;align-items:baseline}
+}
+.item[data-st="late"]{border-left-color:var(--late)}
+.item[data-st="blocked"]{border-left-color:var(--blocked)}
+.item[data-st="open"]{border-left-color:var(--ontrack)}
+.item[data-st="soon"]{border-left-color:var(--atrisk)}
+.item[data-st="done"]{border-left-color:var(--rule)}
+.i-title{font-size:14px;font-weight:500;min-width:0}
+.i-title .disc{font-family:var(--mono);font-size:10px;color:var(--ink-mute);letter-spacing:.08em;margin-right:8px}
+.i-note{grid-column:1/-1;font-size:12.5px;color:var(--ink-soft);padding-left:0}
+.i-note b{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--blocked);font-weight:500}
+.i-owner{font-size:13px;color:var(--ink-soft)}
+.i-owner .firm{display:block;font-size:11.5px;color:var(--ink-mute)}
+.noowner{
+  display:inline-block;border:1px dashed var(--rule-strong);color:var(--ink-mute);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;
+}
+.i-due{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums}
+.i-due span{display:block;font-size:10.5px;color:var(--ink-mute);letter-spacing:.02em}
+.item[data-st="late"] .i-due span{color:var(--late)}
+.item[data-st="soon"] .i-due span{color:var(--atrisk)}
+.pill{
+  display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border:1px solid transparent;
+}
+.pill[data-st="late"]{background:var(--late-bg);color:var(--late);border-color:var(--late)}
+.pill[data-st="blocked"]{background:var(--blocked-bg);color:var(--blocked);border-color:var(--blocked)}
+.pill[data-st="open"]{background:var(--ontrack-bg);color:var(--ontrack);border-color:var(--ontrack)}
+.pill[data-st="soon"]{background:var(--atrisk-bg);color:var(--atrisk);border-color:var(--atrisk)}
+.pill[data-st="done"]{background:var(--surface-sunk);color:var(--ink-mute);border-color:var(--rule-strong)}
+.empty{background:var(--surface);padding:22px 15px;color:var(--ink-mute);font-size:13px;text-align:center}
+
+/* decisions */
+.decisions{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.dec{background:var(--surface);padding:14px 15px;display:grid;gap:8px;border-left:3px solid var(--accent)}
+.dec[data-st="late"]{border-left-color:var(--late)}
+.dec-top{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+.dec-top h4{font-size:15px;font-weight:600;flex:1 1 260px;text-wrap:balance}
+.dec-opts{display:flex;flex-wrap:wrap;gap:8px;font-size:13px;color:var(--ink-soft)}
+.dec-opts .opt{border:1px solid var(--rule-strong);padding:3px 9px;background:var(--ground)}
+.dec-meta{display:flex;flex-wrap:wrap;gap:4px 18px;font-family:var(--mono);font-size:11px;color:var(--ink-mute);letter-spacing:.02em}
+.dec-meta b{color:var(--ink-soft);font-weight:500}
+.dec-act{display:flex;gap:8px;flex-wrap:wrap;padding-top:2px}
+.btn{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:6px 13px;border:1px solid var(--accent);color:var(--accent);background:var(--ground);
+}
+.btn:hover{background:var(--accent);color:#FAF7F5}
+.btn[disabled]{border-color:var(--rule-strong);color:var(--ink-mute);cursor:not-allowed;background:var(--surface-sunk)}
+.btn[disabled]:hover{background:var(--surface-sunk);color:var(--ink-mute)}
+.btn.ghost{border-color:var(--rule-strong);color:var(--ink-soft)}
+.btn.ghost:hover{background:var(--surface-sunk);color:var(--ink)}
+
+/* milestones */
+.miles{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.mile{background:var(--surface);padding:11px 15px;display:grid;gap:3px 16px;grid-template-columns:1fr}
+@media (min-width:620px){.mile{grid-template-columns:96px 1fr 132px;align-items:baseline}}
+.mile .md{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums}
+.mile .mt{font-size:14px;font-weight:500}
+.mile .mp{font-family:var(--mono);font-size:10.5px;color:var(--ink-mute);letter-spacing:.06em;text-transform:uppercase}
+.mile .mc{font-size:11.5px;color:var(--ink-mute)}
+
+/* stat strip */
+.stats{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);grid-template-columns:repeat(auto-fit,minmax(132px,1fr))}
+.stat{background:var(--surface);padding:12px 14px}
+.stat dt{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-mute)}
+.stat dd{margin:5px 0 0;font-family:var(--serif);font-size:25px;line-height:1;font-variant-numeric:tabular-nums}
+.stat .sub{font-size:11.5px;color:var(--ink-soft);margin-top:5px;font-family:var(--sans)}
+
+/* data tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);background:var(--surface)}
+table.data{font-size:13px;min-width:460px}
+table.data th{
+  font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-mute);
+  text-align:left;font-weight:500;padding:9px 14px;border-bottom:1px solid var(--rule-strong);white-space:nowrap;
+}
+table.data td{padding:9px 14px;border-bottom:1px solid var(--rule);vertical-align:baseline}
+table.data tr:last-child td{border-bottom:none}
+table.data td.r,table.data th.r{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono)}
+table.data tfoot td{font-weight:600;border-top:1px solid var(--rule-strong);border-bottom:none;background:var(--surface-sunk)}
+
+/* meters */
+.meter{height:6px;background:var(--surface-sunk);border:1px solid var(--rule);position:relative;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent)}
+.meter[data-tone="ontrack"] i{background:var(--ontrack)}
+.meter[data-tone="atrisk"] i{background:var(--atrisk)}
+.meterrow{background:var(--surface);border:1px solid var(--rule);padding:13px 15px;display:grid;gap:8px}
+.meterrow .mhead{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.meterrow .mlabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.meterrow .mval{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums}
+.meterrow .mfoot{font-size:12px;color:var(--ink-mute)}
+.meters{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:700px){.meters{grid-template-columns:1fr 1fr}}
+
+/* source files */
+.files{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.file{background:var(--surface);padding:10px 14px;display:flex;gap:12px;align-items:center;width:100%;text-align:left}
+.file:hover{background:var(--surface-sunk)}
+.file .ext{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--accent);
+  border:1px solid var(--rule-strong);padding:3px 6px;min-width:44px;text-align:center;flex:none;
+}
+.file .fname{font-size:13.5px;min-width:0}
+.file .floc{font-family:var(--mono);font-size:10.5px;color:var(--ink-mute);margin-left:auto;white-space:nowrap;flex:none}
+@media (max-width:520px){.file .floc{display:none}}
+
+/* log */
+.week{border:1px solid var(--rule);background:var(--surface)}
+.week+.week{margin-top:12px}
+.week-h{display:flex;gap:12px;align-items:baseline;padding:11px 15px;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.week-h .we{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-mute)}
+.week-h .wd{font-family:var(--serif);font-size:19px;font-weight:400}
+.week-h .wc{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-mute)}
+.week-b{padding:4px 0}
+.logline{display:grid;gap:2px 12px;padding:8px 15px;grid-template-columns:1fr}
+@media (min-width:620px){.logline{grid-template-columns:34px 1fr 120px;align-items:baseline}}
+.logline .lc{font-family:var(--mono);font-size:10.5px;color:var(--accent);letter-spacing:.06em}
+.logline .lt{font-size:13.5px}
+.logline .lw{font-size:11.5px;color:var(--ink-mute)}
+
+/* restricted */
+.restricted{
+  border:1px dashed var(--rule-strong);background:var(--surface);padding:18px 16px;
+  color:var(--ink-mute);font-size:13px;display:grid;gap:5px;
+}
+.restricted b{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(8px);
+  background:var(--ink);color:var(--ground);font-size:12.5px;padding:10px 16px;
+  max-width:min(92vw,460px);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;
+  z-index:40;text-align:center;
+}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+footer.colophon{
+  max-width:1240px;margin:0 auto;padding:20px;border-top:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;gap:6px 20px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.06em;color:var(--ink-mute);text-transform:uppercase;
+}
+</style>
+
+<header class="titleblock">
+  <div class="tb-inner">
+    <div class="tb-top">
+      <div>
+        <div class="brandmark"><span class="rd">RΔD by Camelot Homes</span></div>
+        <h1 class="projname">Paragon</h1>
+        <p class="projsub">Eight-home luxury infill community, Scottsdale, Arizona. Capital partnership with Circle Road.</p>
+      </div>
+      <div class="tb-controls">
+        <div class="ctrl">
+          <label for="roleSelect">Viewing as</label>
+          <select id="roleSelect">
+            <option value="md">Trent Hancock, Managing Director</option>
+            <option value="pm">Alex Dodge, Project Manager</option>
+            <option value="consultant">Consultant, limited access</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <dl class="tb-meta" id="tbMeta"></dl>
+  </div>
+  <div class="samplebar">
+    <b>Sample data</b>
+    <span>Every figure, name, and date on this sheet is illustrative. No external systems are connected yet.</span>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="sheetindex" aria-label="Sheet index">
+    <div class="idx-title">Sheet index</div>
+    <div class="idx-list" id="idxList" role="tablist"></div>
+  </nav>
+  <main id="sheets"></main>
+</div>
+
+<footer class="colophon">
+  <span>Research and Developments, LLC</span>
+  <span>Paragon control sheet, revision 07</span>
+  <span>Issued 11 Sep 2026</span>
+  <span>Confidential, internal</span>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------------------------------------------------------------
+   SAMPLE DATA. Illustrative only.
+   TODAY is pinned so the sample stays internally consistent.
+---------------------------------------------------------------- */
+var TODAY = "2026-09-11";
+
+var DISC = {
+  G:{code:"G-100",name:"Overview",label:"Overview"},
+  A:{code:"A-200",name:"Architecture",label:"Architecture"},
+  S:{code:"S-300",name:"Engineering",label:"Engineering"},
+  C:{code:"C-400",name:"Construction",label:"Construction"},
+  F:{code:"F-500",name:"Finance",label:"Finance"},
+  M:{code:"M-600",name:"Sales",label:"Sales"},
+  L:{code:"L-700",name:"Weekly log",label:"Weekly log"}
+};
+var ORDER = ["G","A","S","C","F","M","L"];
+
+var ROLES = {
+  md:{name:"Trent Hancock",short:"T. Hancock",title:"Managing Director",
+      sheets:["G","A","S","C","F","M","L"],canApprove:true,seesCapital:true},
+  pm:{name:"Alex Dodge",short:"A. Dodge",title:"Project Manager",
+      sheets:["G","A","S","C","F","M","L"],canApprove:false,seesCapital:false},
+  consultant:{name:"Consultant",short:null,title:"Limited access",
+      sheets:["G","A","S","C","L"],canApprove:false,seesCapital:false}
+};
+
+var PHASES = [
+  {n:"01",name:"Acquisition",date:"Closed Nov 2025",state:"done"},
+  {n:"02",name:"Entitlement",date:"Complete Mar 2026",state:"done"},
+  {n:"03",name:"Design",date:"Complete Aug 2026",state:"done"},
+  {n:"04",name:"Permitting",date:"Target Oct 2026",state:"now"},
+  {n:"05",name:"Site work",date:"Oct 2026 to Jan 2027",state:"next"},
+  {n:"06",name:"Vertical construction",date:"Jan 2027 to Feb 2028",state:"next"},
+  {n:"07",name:"Sales and closeout",date:"Mar 2027 to Jun 2028",state:"next"}
+];
+
+var ITEMS = [
+  /* Architecture */
+  {id:"A-01",d:"A",t:"Issue Revision C elevations, Lots 5 through 8",o:"D. Alvarez",firm:"Ridgeline Architecture",due:"2026-09-16"},
+  {id:"A-02",d:"A",t:"Resolve courtyard wall height variance, Lot 2",o:null,due:"2026-09-19"},
+  {id:"A-03",d:"A",t:"Window schedule value-engineering pass",o:"D. Alvarez",firm:"Ridgeline Architecture",due:"2026-09-04"},
+  {id:"A-04",d:"A",t:"Interior specification book, Phase 1",o:"T. Hancock",firm:"Hancock Design",due:"2026-10-02"},
+  {id:"A-05",d:"A",t:"Exterior material board sign-off, corten and plaster and stone",o:"T. Hancock",firm:"Hancock Design",due:"2026-09-25"},
+  {id:"A-06",d:"A",t:"Common drive lighting layout at 2700K",o:"J. Okafor",firm:"Desert Verde Landscape",due:"2026-10-07"},
+  /* Engineering */
+  {id:"S-01",d:"S",t:"Structural calculations resubmittal, Lots 1 through 4",o:"P. Nakagawa",firm:"Mesquite Structural",due:"2026-09-18"},
+  {id:"S-02",d:"S",t:"Geotechnical addendum, expansive soils on east half",o:"T. Boone",firm:"Gila Geotechnical",due:"2026-09-08"},
+  {id:"S-03",d:"S",t:"Foundation system decision package, Lots 6 through 8",o:"P. Nakagawa",firm:"Mesquite Structural",due:"2026-09-22",st:"blocked",note:"Waiting on the cost delta from Camelot Construction, requested 02 Sep."},
+  {id:"S-04",d:"S",t:"Dry utility coordination, transformer location",o:"R. Ellsworth",firm:"Sonoran Civil Group",due:"2026-09-30",st:"blocked",note:"Waiting on utility design response, submitted 18 Aug."},
+  {id:"S-05",d:"S",t:"Final drainage report",o:"R. Ellsworth",firm:"Sonoran Civil Group",due:"2026-10-09"},
+  {id:"S-06",d:"S",t:"Mechanical, electrical and plumbing rough coordination model",o:"S. Whitfield",firm:"Copperline MEP",due:"2026-10-16"},
+  /* Construction */
+  {id:"C-01",d:"C",t:"Respond to grading permit round two comments",o:"A. Dodge",firm:"RΔD",due:"2026-09-17"},
+  {id:"C-02",d:"C",t:"Site mobilization plan and stormwater posting",o:"M. Ruiz",firm:"Camelot Construction",due:"2026-10-06"},
+  {id:"C-03",d:"C",t:"Award mass grading subcontract",o:"A. Dodge",firm:"RΔD",due:"2026-09-10"},
+  {id:"C-04",d:"C",t:"Baseline the Lot 4 model home schedule",o:"A. Dodge",firm:"RΔD",due:"2026-09-29"},
+  {id:"C-05",d:"C",t:"Temporary power and construction water",o:null,due:"2026-10-20"},
+  {id:"C-06",d:"C",t:"Jobsite safety and access plan for consultant visits",o:"M. Ruiz",firm:"Camelot Construction",due:"2026-09-24"},
+  {id:"C-07",d:"C",t:"Survey control and lot staking",o:"R. Ellsworth",firm:"Sonoran Civil Group",due:"2026-10-12"},
+  /* Finance */
+  {id:"F-01",d:"F",t:"Draw package 05 to Circle Road",o:"A. Dodge",firm:"RΔD",due:"2026-09-12"},
+  {id:"F-02",d:"F",t:"Reforecast hard costs against Revision C elevations",o:"T. Hancock",firm:"RΔD",due:"2026-09-26"},
+  {id:"F-03",d:"F",t:"Construction loan covenant certificate, Q3",o:"Camelot Finance",firm:"Camelot Homes",due:"2026-09-30"},
+  {id:"F-04",d:"F",t:"Interest reserve true-up",o:null,due:"2026-10-14"},
+  {id:"F-05",d:"F",t:"Circle Road Q4 partner package",o:"T. Hancock",firm:"RΔD",due:"2026-11-20"},
+  {id:"F-06",d:"F",t:"Builders risk binder for vertical construction",o:"A. Dodge",firm:"RΔD",due:"2026-09-05"},
+  /* Sales */
+  {id:"M-01",d:"M",t:"Phase 1 base price schedule",o:"T. Hancock",firm:"RΔD",due:"2026-10-10"},
+  {id:"M-02",d:"M",t:"Comparable set refresh, trailing six months",o:"L. Pike",firm:"Camelot Sales",due:"2026-09-20"},
+  {id:"M-03",d:"M",t:"Broker preview event plan",o:"L. Pike",firm:"Camelot Sales",due:"2026-11-06"},
+  {id:"M-04",d:"M",t:"Renderings and fly-through, Lots 1 through 3",o:"T. Hancock",firm:"Hancock Design",due:"2026-10-23"},
+  {id:"M-05",d:"M",t:"Reservation agreement template, legal review",o:"L. Pike",firm:"Camelot Sales",due:"2026-09-27",st:"blocked",note:"Waiting on outside counsel markup, sent 28 Aug."}
+];
+
+var DECISIONS = [
+  {id:"D-01",d:"A",t:"Elevation package for Lots 5 through 8",
+   opts:["Scheme B, courtyard massing","Scheme C, linear pavilion"],
+   decider:"T. Hancock",due:"2026-09-16",impact:"$340,000 hard cost delta",
+   ctx:"Scheme C carries the stronger street presence and the higher cost. Ridgeline needs a direction before Revision C can be issued."},
+  {id:"D-02",d:"S",t:"Foundation system, Lots 6 through 8",
+   opts:["Post-tension slab","Stem wall and slab"],
+   decider:"T. Hancock with Mesquite Structural",due:"2026-09-22",impact:"$96,000 delta across three lots",
+   ctx:"Expansive soils on the east half favor post-tension. Held until the cost delta arrives from Camelot Construction."},
+  {id:"D-03",d:"F",t:"Certify draw 05 to Circle Road",
+   opts:["Certify as submitted, $1,420,000","Hold pending lien waivers"],
+   decider:"T. Hancock",due:"2026-09-09",impact:"$1,420,000 funding, 11 day lender cycle",
+   ctx:"Two waivers from the grading sub arrived after the cutoff. Every day of delay pushes the funding date."},
+  {id:"D-04",d:"A",t:"Site lighting specification deviation",
+   opts:["Hold 2700K throughout","Accept 3000K on path lighting"],
+   decider:"T. Hancock",due:"2026-09-30",impact:"$38,000 premium to hold the spec",
+   ctx:"The 2700K fixture has a fourteen week lead time. Path lighting is the only run affected."},
+  {id:"D-05",d:"M",t:"Phase 1 base price schedule",
+   opts:["Release at $42.0M sell-out","Hold for a spring repricing"],
+   decider:"T. Hancock with Camelot leadership",due:"2026-10-10",impact:"Sets the $42.0M community sell-out",
+   ctx:"Comparable set refresh lands 20 Sep and should be in hand before this is settled."}
+];
+
+var MILESTONES = [
+  {date:"2026-09-18",t:"Plan review round two comments returned",phase:"Permitting",who:"City of Scottsdale"},
+  {date:"2026-10-02",t:"Grading permit issued",phase:"Permitting",who:"Gate to site work"},
+  {date:"2026-10-13",t:"Site mobilization",phase:"Site work",who:"Camelot Construction"},
+  {date:"2026-10-30",t:"Mass grading complete",phase:"Site work",who:"Grading subcontractor"},
+  {date:"2026-11-20",t:"Lot 4 model home foundation pour",phase:"Vertical",who:"Camelot Construction"},
+  {date:"2026-12-04",t:"Circle Road Q4 partner meeting",phase:"Finance",who:"Bruner partners"}
+];
+
+var LOG = [
+  {we:"2026-09-11",entries:[
+    {d:"A",t:"Revision B elevations issued to the city for round two review.",who:"Ridgeline Architecture"},
+    {d:"C",t:"Mass grading bids received from three subcontractors, leveling complete.",who:"A. Dodge"},
+    {d:"F",t:"Draw 04 funded at $1,180,000, on the eleven day cycle.",who:"Camelot Finance"}
+  ]},
+  {we:"2026-09-04",entries:[
+    {d:"S",t:"Geotechnical field work complete, fourteen borings logged.",who:"Gila Geotechnical"},
+    {d:"M",t:"Lot 3 reservation received, the first in the community.",who:"L. Pike"},
+    {d:"F",t:"Hard cost reforecast circulated to Circle Road ahead of the quarterly.",who:"T. Hancock"}
+  ]},
+  {we:"2026-08-28",entries:[
+    {d:"S",t:"Civil construction documents advanced to ninety percent.",who:"Sonoran Civil Group"},
+    {d:"A",t:"Landscape concept approved for the common drive.",who:"T. Hancock"},
+    {d:"C",t:"Preconstruction meeting held with the superintendent and the civil team.",who:"M. Ruiz"}
+  ]},
+  {we:"2026-08-21",entries:[
+    {d:"C",t:"Grading permit application submitted.",who:"A. Dodge"},
+    {d:"F",t:"Builders risk quotes received from two carriers.",who:"A. Dodge"}
+  ]},
+  {we:"2026-08-14",entries:[
+    {d:"C",t:"Site plan approval received from the city.",who:"A. Dodge"},
+    {d:"S",t:"Structural design development complete for Lots 1 through 4.",who:"Mesquite Structural"}
+  ]},
+  {we:"2026-08-07",entries:[
+    {d:"F",t:"Circle Road capital call 02 funded at $1,900,000.",who:"Circle Road"},
+    {d:"A",t:"Architectural schematic set frozen across all eight lots.",who:"Ridgeline Architecture"}
+  ]}
+];
+
+var FILES = {
+  A:[{n:"Paragon Architectural Set, Revision B",e:"PDF",loc:"SharePoint / Paragon / 02 Design"},
+     {n:"Exterior Material Board",e:"PDF",loc:"SharePoint / Paragon / 02 Design"},
+     {n:"Interior Specification Book, in progress",e:"XLSX",loc:"OneDrive / Hancock Design"},
+     {n:"Lighting Cut Sheets, 2700K package",e:"PDF",loc:"SharePoint / Paragon / 02 Design"}],
+  S:[{n:"Structural Calculations, Revision 2",e:"PDF",loc:"SharePoint / Paragon / 03 Engineering"},
+     {n:"Geotechnical Report 26-0412",e:"PDF",loc:"SharePoint / Paragon / 03 Engineering"},
+     {n:"Civil Construction Documents, 90 percent",e:"DWG",loc:"SharePoint / Paragon / 03 Engineering"},
+     {n:"Utility Coordination Log",e:"XLSX",loc:"SharePoint / Paragon / 03 Engineering"}],
+  C:[{n:"Master Schedule, version 7",e:"XLSX",loc:"SharePoint / Paragon / 04 Construction"},
+     {n:"Grading Permit Submittal",e:"PDF",loc:"SharePoint / Paragon / 04 Construction"},
+     {n:"Subcontractor Bid Tab, mass grading",e:"XLSX",loc:"SharePoint / Paragon / 04 Construction"},
+     {n:"Site Logistics Plan",e:"PDF",loc:"SharePoint / Paragon / 04 Construction"}],
+  F:[{n:"Paragon Proforma, version 11",e:"XLSX",loc:"SharePoint / Paragon / 05 Finance"},
+     {n:"Draw Package 04",e:"PDF",loc:"SharePoint / Paragon / 05 Finance"},
+     {n:"Capital Stack Summary",e:"PDF",loc:"SharePoint / Paragon / 05 Finance"},
+     {n:"Circle Road Partnership Agreement",e:"PDF",loc:"SharePoint / Paragon / 01 Legal"}],
+  M:[{n:"Comparable Set, August 2026",e:"XLSX",loc:"SharePoint / Paragon / 06 Sales"},
+     {n:"Price Schedule, draft",e:"XLSX",loc:"SharePoint / Paragon / 06 Sales"},
+     {n:"Lot Release Plan",e:"PDF",loc:"SharePoint / Paragon / 06 Sales"}]
+};
+
+var LOTS = [
+  {lot:"1",sf:4620,price:4950000,status:"Available",note:"Release Mar 2027"},
+  {lot:"2",sf:4840,price:5150000,status:"Available",note:"Release Mar 2027"},
+  {lot:"3",sf:5180,price:5950000,status:"Reserved",note:"Reserved 29 Aug 2026"},
+  {lot:"4",sf:4410,price:4650000,status:"Model",note:"Held to closeout"},
+  {lot:"5",sf:4760,price:5050000,status:"Available",note:"Release Jun 2027"},
+  {lot:"6",sf:5020,price:5450000,status:"Available",note:"Release Jun 2027"},
+  {lot:"7",sf:4680,price:4980000,status:"Available",note:"Release Sep 2027"},
+  {lot:"8",sf:5240,price:5820000,status:"Available",note:"Release Sep 2027"}
+];
+
+var BUDGET = [
+  {k:"Land, contributed",v:4200000},
+  {k:"Hard costs",v:18900000},
+  {k:"Soft costs",v:4100000},
+  {k:"Financing and carry",v:1300000},
+  {k:"Contingency",v:900000}
+];
+var STACK = [
+  {k:"Construction loan",v:19100000,note:"65 percent loan to cost"},
+  {k:"Circle Road equity",v:6100000,note:"Capital calls 01 through 04"},
+  {k:"RΔD land equity",v:4200000,note:"Contributed at basis"}
+];
+
+/* --------------------------- helpers --------------------------- */
+function el(tag,cls,html){var n=document.createElement(tag);if(cls)n.className=cls;if(html!=null)n.innerHTML=html;return n;}
+function days(a,b){return Math.round((Date.parse(b+"T00:00:00Z")-Date.parse(a+"T00:00:00Z"))/86400000);}
+function fmtDate(iso){
+  var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var p=iso.split("-");return p[2]+" "+m[+p[1]-1]+" "+p[0];
+}
+function shortDate(iso){
+  var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var p=iso.split("-");return p[2]+" "+m[+p[1]-1];
+}
+function money(n){
+  if(n>=1000000)return "$"+(n/1000000).toFixed(n%1000000===0?1:2)+"M";
+  if(n>=1000)return "$"+Math.round(n/1000)+"K";
+  return "$"+n;
+}
+function dollars(n){return "$"+n.toLocaleString("en-US");}
+function statusOf(it){
+  if(it.st==="done")return "done";
+  if(it.st==="blocked")return "blocked";
+  var dd=days(TODAY,it.due);
+  if(dd<0)return "late";
+  if(dd<=7)return "soon";
+  return "open";
+}
+function dueLabel(it){
+  var dd=days(TODAY,it.due);
+  if(it.st==="done")return "Complete";
+  if(dd<0)return "Late by "+Math.abs(dd)+(Math.abs(dd)===1?" day":" days");
+  if(dd===0)return "Due today";
+  if(dd===1)return "Due tomorrow";
+  return "In "+dd+" days";
+}
+var ST_LABEL={late:"Late",blocked:"Blocked",soon:"Due soon",open:"On track",done:"Complete"};
+
+/* --------------------------- state ----------------------------- */
+var state={role:"md",sheet:"G",filter:"all"};
+try{
+  var saved=localStorage.getItem("paragon.role");
+  if(saved&&ROLES[saved])state.role=saved;
+}catch(e){}
+
+function role(){return ROLES[state.role];}
+function visibleItems(){
+  var allowed=role().sheets;
+  return ITEMS.filter(function(it){return allowed.indexOf(it.d)>-1;});
+}
+function toast(msg){
+  var t=document.getElementById("toast");
+  t.textContent=msg;t.classList.add("on");
+  clearTimeout(toast._h);
+  toast._h=setTimeout(function(){t.classList.remove("on");},2600);
+}
+
+/* --------------------------- renderers ------------------------- */
+function renderTitleMeta(){
+  var v=visibleItems();
+  var late=v.filter(function(i){return statusOf(i)==="late";}).length;
+  var meta=[
+    ["Phase","04 Permitting"],
+    ["Homes","8 lots, 3.1 acres"],
+    ["Sell-out","$42.0M"],
+    ["As of",fmtDate(TODAY)],
+    ["Action items",String(v.filter(function(i){return statusOf(i)!=="done";}).length)+" open"],
+    ["Late",String(late)]
+  ];
+  var dl=document.getElementById("tbMeta");
+  dl.innerHTML="";
+  meta.forEach(function(m){
+    var c=el("div","tb-cell");
+    c.appendChild(el("dt",null,m[0]));
+    c.appendChild(el("dd",null,m[1]));
+    dl.appendChild(c);
+  });
+}
+
+function renderIndex(){
+  var list=document.getElementById("idxList");
+  list.innerHTML="";
+  var allowed=role().sheets;
+  ORDER.forEach(function(k){
+    if(allowed.indexOf(k)<0)return;
+    var d=DISC[k];
+    var b=el("button","idx-btn");
+    b.type="button";b.setAttribute("role","tab");
+    b.setAttribute("aria-current",state.sheet===k?"true":"false");
+    b.innerHTML='<span class="code">'+d.code+'</span><span class="name">'+d.name+'</span>';
+    if(k!=="G"&&k!=="L"){
+      var lateN=ITEMS.filter(function(i){return i.d===k&&statusOf(i)==="late";}).length;
+      if(lateN)b.innerHTML+='<span class="idx-flag">'+lateN+'</span>';
+    }
+    b.addEventListener("click",function(){state.sheet=k;state.filter="all";render();});
+    list.appendChild(b);
+  });
+}
+
+function itemsBlock(items,opts){
+  opts=opts||{};
+  var wrap=el("div","block");
+  var head=el("div","blockhead");
+  head.appendChild(el("h3",null,opts.title||"Action items"));
+  head.appendChild(el("span","count",items.length+(items.length===1?" item":" items")));
+  if(opts.filters){
+    var f=el("div","filters");
+    [["all","All"],["late","Late"],["blocked","Blocked"],["unowned","No owner"],["mine","Mine"]].forEach(function(p){
+      if(p[0]==="mine"&&!role().short)return;
+      var c=el("button","chip",p[1]);
+      c.type="button";
+      c.setAttribute("aria-pressed",state.filter===p[0]?"true":"false");
+      c.addEventListener("click",function(){state.filter=(state.filter===p[0]?"all":p[0]);render();});
+      f.appendChild(c);
+    });
+    head.appendChild(f);
+  }
+  wrap.appendChild(head);
+
+  var box=el("div","items");
+  if(!items.length){
+    box.appendChild(el("div","empty",opts.emptyText||"Nothing matches this filter."));
+  }
+  items.forEach(function(it){
+    var st=statusOf(it);
+    var row=el("div","item");
+    row.setAttribute("data-st",st);
+    var title=el("div","i-title");
+    title.innerHTML='<span class="disc">'+it.id+'</span>'+it.t;
+    row.appendChild(title);
+
+    var owner=el("div","i-owner");
+    if(it.o){
+      owner.innerHTML=it.o+(it.firm?'<span class="firm">'+it.firm+'</span>':"");
+    }else{
+      owner.innerHTML='<span class="noowner">No owner</span>';
+    }
+    row.appendChild(owner);
+
+    var due=el("div","i-due");
+    due.innerHTML=shortDate(it.due)+'<span>'+dueLabel(it)+'</span>';
+    row.appendChild(due);
+
+    var pill=el("div");
+    pill.innerHTML='<span class="pill" data-st="'+st+'">'+ST_LABEL[st]+'</span>';
+    row.appendChild(pill);
+
+    if(it.note){
+      var n=el("div","i-note");
+      n.innerHTML='<b>Blocked by</b> '+it.note;
+      row.appendChild(n);
+    }
+    box.appendChild(row);
+  });
+  wrap.appendChild(box);
+  return wrap;
+}
+
+function filesBlock(key){
+  var list=FILES[key]||[];
+  var wrap=el("div","block");
+  var head=el("div","blockhead");
+  head.appendChild(el("h3",null,"Source files"));
+  head.appendChild(el("span","count",list.length+" documents"));
+  wrap.appendChild(head);
+  var box=el("div","files");
+  list.forEach(function(f){
+    var b=el("button","file");
+    b.type="button";
+    b.innerHTML='<span class="ext">'+f.e+'</span><span class="fname">'+f.n+'</span><span class="floc">'+f.loc+'</span>';
+    b.addEventListener("click",function(){
+      toast("Link target for “"+f.n+"” is set once SharePoint is connected.");
+    });
+    box.appendChild(b);
+  });
+  wrap.appendChild(box);
+  return wrap;
+}
+
+function statsBlock(title,rows){
+  var wrap=el("div","block");
+  var head=el("div","blockhead");
+  head.appendChild(el("h3",null,title));
+  wrap.appendChild(head);
+  var dl=el("dl","stats");
+  rows.forEach(function(r){
+    var s=el("div","stat");
+    s.appendChild(el("dt",null,r[0]));
+    s.appendChild(el("dd",null,r[1]));
+    if(r[2])s.appendChild(el("div","sub",r[2]));
+    dl.appendChild(s);
+  });
+  wrap.appendChild(dl);
+  return wrap;
+}
+
+function sheetHead(key,note){
+  var d=DISC[key];
+  var h=el("div","sheethead");
+  h.innerHTML='<span class="code">'+d.code+'</span><h2>'+d.name+'</h2>'+(note?'<span class="note">'+note+'</span>':"");
+  return h;
+}
+
+/* -------- Overview sheet -------- */
+function renderOverview(){
+  var s=el("section","sheet");
+  s.appendChild(sheetHead("G","Revision 07, issued "+fmtDate(TODAY)));
+
+  /* phases */
+  var pb=el("div","block");
+  var ph=el("div","blockhead");
+  ph.appendChild(el("h3",null,"Phase"));
+  ph.appendChild(el("span","count","4 of 7, permitting"));
+  pb.appendChild(ph);
+  var rail=el("div","phaserail");
+  PHASES.forEach(function(p){
+    var c=el("div","phase");
+    c.setAttribute("data-state",p.state);
+    c.innerHTML='<div class="pn">'+p.n+'</div><div class="pname">'+p.name+'</div><div class="pdate">'+p.date+'</div>';
+    rail.appendChild(c);
+  });
+  pb.appendChild(rail);
+  s.appendChild(pb);
+
+  /* attention */
+  var v=visibleItems();
+  var late=v.filter(function(i){return statusOf(i)==="late";});
+  var blocked=v.filter(function(i){return statusOf(i)==="blocked";});
+  var unowned=v.filter(function(i){return !i.o&&i.st!=="done";});
+  var soon=v.filter(function(i){return statusOf(i)==="soon";});
+
+  var ab=el("div","block");
+  var ah=el("div","blockhead");
+  ah.appendChild(el("h3",null,"Needs attention"));
+  ah.appendChild(el("span","count","Select a tile to filter the list below"));
+  ab.appendChild(ah);
+  var grid=el("div","attn");
+  [["late","Late",late.length,"Past the committed date"],
+   ["blocked","Blocked",blocked.length,"Waiting on someone outside the team"],
+   ["unowned","No owner",unowned.length,"Nobody is accountable yet"],
+   ["soon","Due within 7 days",soon.length,"Closing fast, still owned"]].forEach(function(t){
+    var b=el("button","attn-tile");
+    b.type="button";b.setAttribute("data-kind",t[0]);
+    var fk=t[0];
+    b.setAttribute("aria-pressed",state.filter===fk?"true":"false");
+    b.innerHTML='<div class="n">'+t[2]+'</div><div class="l">'+t[1]+'</div><div class="s">'+t[3]+'</div>';
+    b.addEventListener("click",function(){state.filter=(state.filter===fk?"all":fk);render();});
+    grid.appendChild(b);
+  });
+  ab.appendChild(grid);
+  s.appendChild(ab);
+
+  /* decisions */
+  if(state.role!=="consultant"){
+    var decs=DECISIONS.slice().sort(function(a,b){return a.due<b.due?-1:1;});
+    var db=el("div","block");
+    var dh=el("div","blockhead");
+    dh.appendChild(el("h3",null,"Decisions awaiting approval"));
+    dh.appendChild(el("span","count",decs.length+" open, 1 past due"));
+    db.appendChild(dh);
+    var dbox=el("div","decisions");
+    decs.forEach(function(d){
+      var isLate=days(TODAY,d.due)<0;
+      var row=el("div","dec");
+      if(isLate)row.setAttribute("data-st","late");
+      var top=el("div","dec-top");
+      top.innerHTML='<h4>'+d.t+'</h4><span class="pill" data-st="'+(isLate?"late":"open")+'">'+
+        (isLate?"Late by "+Math.abs(days(TODAY,d.due))+" days":"Due "+shortDate(d.due))+'</span>';
+      row.appendChild(top);
+      var opts=el("div","dec-opts");
+      d.opts.forEach(function(o){opts.appendChild(el("span","opt",o));});
+      row.appendChild(opts);
+      row.appendChild(el("p",null,d.ctx));
+      var meta=el("div","dec-meta");
+      meta.innerHTML='<span>Decider <b>'+d.decider+'</b></span><span>Impact <b>'+d.impact+'</b></span>'+
+        '<span>Sheet <b>'+DISC[d.d].code+'</b></span>';
+      row.appendChild(meta);
+      var act=el("div","dec-act");
+      if(role().canApprove){
+        var ap=el("button","btn","Approve");
+        ap.type="button";
+        ap.addEventListener("click",function(){toast("Approvals are recorded once the project systems are connected.");});
+        var hold=el("button","btn ghost","Send back");
+        hold.type="button";
+        hold.addEventListener("click",function(){toast("Send-back routing is set up when the project systems are connected.");});
+        act.appendChild(ap);act.appendChild(hold);
+      }else{
+        var w=el("button","btn","Awaiting T. Hancock");
+        w.type="button";w.disabled=true;
+        act.appendChild(w);
+      }
+      row.appendChild(act);
+      dbox.appendChild(row);
+    });
+    db.appendChild(dbox);
+    s.appendChild(db);
+  }
+
+  /* milestones */
+  var mb=el("div","block");
+  var mh=el("div","blockhead");
+  mh.appendChild(el("h3",null,"Upcoming milestones"));
+  mh.appendChild(el("span","count","Next 90 days"));
+  mb.appendChild(mh);
+  var mbox=el("div","miles");
+  MILESTONES.forEach(function(m){
+    var r=el("div","mile");
+    r.innerHTML='<div class="md">'+shortDate(m.date)+'</div>'+
+      '<div><div class="mt">'+m.t+'</div><div class="mc">'+m.who+', in '+days(TODAY,m.date)+' days</div></div>'+
+      '<div class="mp">'+m.phase+'</div>';
+    mbox.appendChild(r);
+  });
+  mb.appendChild(mbox);
+  s.appendChild(mb);
+
+  /* filtered item list */
+  var shown=v.slice();
+  if(state.filter==="late")shown=late;
+  else if(state.filter==="blocked")shown=blocked;
+  else if(state.filter==="unowned")shown=unowned;
+  else if(state.filter==="soon")shown=soon;
+  else if(state.filter==="mine")shown=v.filter(function(i){return i.o===role().short;});
+  else shown=v.filter(function(i){var st=statusOf(i);return st==="late"||st==="blocked"||st==="soon"||!i.o;});
+
+  shown=shown.slice().sort(function(a,b){return a.due<b.due?-1:1;});
+  var titleMap={all:"Everything flagged across all sheets",late:"Late items",blocked:"Blocked items",
+                unowned:"Items without an owner",soon:"Due within seven days",mine:"Assigned to "+role().name};
+  s.appendChild(itemsBlock(shown,{title:titleMap[state.filter]||"Flagged items",filters:true,
+    emptyText:"Nothing in this category. That is the goal."}));
+  return s;
+}
+
+/* -------- Discipline sheets -------- */
+function renderDiscipline(key){
+  var s=el("section","sheet");
+  var items=ITEMS.filter(function(i){return i.d===key;});
+  var lateN=items.filter(function(i){return statusOf(i)==="late";}).length;
+  s.appendChild(sheetHead(key,items.length+" items, "+lateN+" late"));
+
+  if(key==="A"){
+    s.appendChild(statsBlock("At a glance",[
+      ["Drawing set","Revision B",'In round two city review'],
+      ["Elevations","3 schemes","Lots 5 through 8 undecided"],
+      ["Material palette","Locked","Corten, plaster, stone, matte black"],
+      ["Lighting","2700K","Spec deviation open, see D-04"]
+    ]));
+  }
+  if(key==="S"){
+    s.appendChild(statsBlock("At a glance",[
+      ["Civil documents","90%","Final drainage report outstanding"],
+      ["Structural","Revision 2","Resubmittal due 18 Sep"],
+      ["Geotechnical","14 borings","Addendum late, expansive soils"],
+      ["Dry utilities","Pending","Transformer location unresolved"]
+    ]));
+  }
+  if(key==="C"){
+    s.appendChild(statsBlock("At a glance",[
+      ["Schedule","Version 7","Baseline pending on Lot 4"],
+      ["Grading permit","In review","Round two comments due 18 Sep"],
+      ["Mobilization","13 Oct 2026","32 days out"],
+      ["Subcontracts","2 of 9","Mass grading award is late"]
+    ]));
+    var mb=el("div","block");
+    var mh=el("div","blockhead");mh.appendChild(el("h3",null,"Schedule health"));mb.appendChild(mh);
+    var mg=el("div","meters");
+    mg.appendChild(meterRow("Permitting progress","Round 2 of 3",66,"ontrack","Grading permit targeted for 02 Oct 2026."));
+    mg.appendChild(meterRow("Subcontracts awarded","2 of 9",22,"atrisk","Seven trades still to buy out before vertical."));
+    mb.appendChild(mg);
+    s.appendChild(mb);
+  }
+  if(key==="F"){
+    s.appendChild(statsBlock("Project economics",[
+      ["Total cost","$29.4M","Land contributed at basis"],
+      ["Sell-out","$42.0M","8 homes, 38,750 square feet"],
+      ["Projected profit","$10.1M","After 6 percent cost of sale"],
+      ["Margin on revenue","24.0%",""],
+      ["Return on cost","34.3%",""]
+    ]));
+    var bb=el("div","block");
+    var bh=el("div","blockhead");
+    bh.appendChild(el("h3",null,"Budget and capital stack"));
+    bh.appendChild(el("span","count","Proforma version 11"));
+    bb.appendChild(bh);
+    var tw=el("div","tablewrap");
+    var total=BUDGET.reduce(function(a,b){return a+b.v;},0);
+    var html='<table class="data"><thead><tr><th>Use of funds</th><th class="r">Amount</th><th class="r">Share</th></tr></thead><tbody>';
+    BUDGET.forEach(function(b){
+      html+='<tr><td>'+b.k+'</td><td class="r">'+dollars(b.v)+'</td><td class="r">'+(b.v/total*100).toFixed(1)+'%</td></tr>';
+    });
+    html+='</tbody><tfoot><tr><td>Total project cost</td><td class="r">'+dollars(total)+'</td><td class="r">100.0%</td></tr></tfoot></table>';
+    tw.innerHTML=html;
+    bb.appendChild(tw);
+
+    var tw2=el("div","tablewrap");
+    var st=STACK.reduce(function(a,b){return a+b.v;},0);
+    var h2='<table class="data"><thead><tr><th>Source of funds</th><th>Terms</th><th class="r">Amount</th><th class="r">Share</th></tr></thead><tbody>';
+    STACK.forEach(function(b){
+      h2+='<tr><td>'+b.k+'</td><td>'+b.note+'</td><td class="r">'+dollars(b.v)+'</td><td class="r">'+(b.v/st*100).toFixed(1)+'%</td></tr>';
+    });
+    h2+='</tbody><tfoot><tr><td>Total sources</td><td></td><td class="r">'+dollars(st)+'</td><td class="r">100.0%</td></tr></tfoot></table>';
+    tw2.innerHTML=h2;
+    bb.appendChild(tw2);
+    s.appendChild(bb);
+
+    var db=el("div","block");
+    var dh=el("div","blockhead");dh.appendChild(el("h3",null,"Draws and contingency"));db.appendChild(dh);
+    var dg=el("div","meters");
+    dg.appendChild(meterRow("Loan funded","$3.72M of $19.1M",19.5,"ontrack","Draw 04 funded. Draw 05 at $1.42M awaiting certification."));
+    dg.appendChild(meterRow("Contingency used","$180K of $900K",20,"atrisk","Twenty percent consumed before site work begins."));
+    db.appendChild(dg);
+    s.appendChild(db);
+
+    if(role().seesCapital){
+      var pb=el("div","block");
+      var ph=el("div","blockhead");
+      ph.appendChild(el("h3",null,"Partner capital"));
+      ph.appendChild(el("span","count","Managing Director only"));
+      pb.appendChild(ph);
+      var pt=el("div","tablewrap");
+      pt.innerHTML='<table class="data"><tbody>'+
+        '<tr><td>Preferred return</td><td class="r">9.0%</td></tr>'+
+        '<tr><td>Split to a 15 percent partner return</td><td class="r">70 / 30</td></tr>'+
+        '<tr><td>Split above a 15 percent partner return</td><td class="r">60 / 40</td></tr>'+
+        '<tr><td>Capital called to date</td><td class="r">'+dollars(4700000)+'</td></tr>'+
+        '<tr><td>Capital call 03, due 30 Oct 2026</td><td class="r">'+dollars(1400000)+'</td></tr>'+
+        '</tbody></table>';
+      pb.appendChild(pt);
+      s.appendChild(pb);
+    }else{
+      var r=el("div","restricted");
+      r.innerHTML='<b>Restricted</b><span>Partner capital terms are visible to the Managing Director only.</span>';
+      s.appendChild(r);
+    }
+  }
+  if(key==="M"){
+    s.appendChild(statsBlock("Sales position",[
+      ["Sell-out","$42.0M","8 homes"],
+      ["Average price","$5.25M",""],
+      ["Average size","4,844 sf","$1,084 per square foot"],
+      ["Reserved","1 of 8","Lot 3, reserved 29 Aug 2026"],
+      ["First release","Mar 2027","Lots 1, 2 and 5"]
+    ]));
+    var lb=el("div","block");
+    var lh=el("div","blockhead");
+    lh.appendChild(el("h3",null,"Lot schedule"));
+    lh.appendChild(el("span","count","Pricing draft, not released"));
+    lb.appendChild(lh);
+    var lw=el("div","tablewrap");
+    var totalP=LOTS.reduce(function(a,b){return a+b.price;},0);
+    var totalS=LOTS.reduce(function(a,b){return a+b.sf;},0);
+    var lhtml='<table class="data"><thead><tr><th>Lot</th><th class="r">Size</th><th class="r">Price</th><th class="r">Per sf</th><th>Status</th><th>Note</th></tr></thead><tbody>';
+    LOTS.forEach(function(l){
+      lhtml+='<tr><td class="r">'+l.lot+'</td><td class="r">'+l.sf.toLocaleString("en-US")+'</td><td class="r">'+dollars(l.price)+
+        '</td><td class="r">$'+Math.round(l.price/l.sf).toLocaleString("en-US")+'</td><td>'+l.status+'</td><td>'+l.note+'</td></tr>';
+    });
+    lhtml+='</tbody><tfoot><tr><td>8</td><td class="r">'+totalS.toLocaleString("en-US")+'</td><td class="r">'+dollars(totalP)+
+      '</td><td class="r">$'+Math.round(totalP/totalS).toLocaleString("en-US")+'</td><td></td><td></td></tr></tfoot></table>';
+    lw.innerHTML=lhtml;
+    lb.appendChild(lw);
+    s.appendChild(lb);
+  }
+
+  s.appendChild(itemsBlock(items.slice().sort(function(a,b){return a.due<b.due?-1:1;}),{title:"Action items"}));
+  s.appendChild(filesBlock(key));
+  return s;
+}
+
+function meterRow(label,val,pct,tone,foot){
+  var r=el("div","meterrow");
+  r.innerHTML='<div class="mhead"><span class="mlabel">'+label+'</span><span class="mval">'+val+'</span></div>'+
+    '<div class="meter" data-tone="'+tone+'" role="img" aria-label="'+label+', '+val+'"><i style="width:'+pct+'%"></i></div>'+
+    '<div class="mfoot">'+foot+'</div>';
+  return r;
+}
+
+/* -------- Log sheet -------- */
+function renderLog(){
+  var s=el("section","sheet");
+  var allowed=role().sheets;
+  s.appendChild(sheetHead("L","Six weeks, most recent first"));
+  var wrap=el("div","block");
+  var h=el("div","blockhead");
+  h.appendChild(el("h3",null,"Weekly accomplishments"));
+  h.appendChild(el("span","count","Logged by the project manager each Friday"));
+  wrap.appendChild(h);
+  var box=el("div");
+  LOG.forEach(function(w){
+    var entries=w.entries.filter(function(e){return allowed.indexOf(e.d)>-1;});
+    if(!entries.length)return;
+    var c=el("div","week");
+    var wh=el("div","week-h");
+    wh.innerHTML='<span class="we">Week ending</span><span class="wd">'+fmtDate(w.we)+'</span>'+
+      '<span class="wc">'+entries.length+(entries.length===1?" entry":" entries")+'</span>';
+    c.appendChild(wh);
+    var b=el("div","week-b");
+    entries.forEach(function(e){
+      var l=el("div","logline");
+      l.innerHTML='<span class="lc">'+e.d+'</span><span class="lt">'+e.t+'</span><span class="lw">'+e.who+'</span>';
+      b.appendChild(l);
+    });
+    c.appendChild(b);
+    box.appendChild(c);
+  });
+  wrap.appendChild(box);
+  s.appendChild(wrap);
+  return s;
+}
+
+/* --------------------------- render ---------------------------- */
+function render(){
+  if(role().sheets.indexOf(state.sheet)<0)state.sheet="G";
+  renderTitleMeta();
+  renderIndex();
+  var host=document.getElementById("sheets");
+  host.innerHTML="";
+  var node;
+  if(state.sheet==="G")node=renderOverview();
+  else if(state.sheet==="L")node=renderLog();
+  else node=renderDiscipline(state.sheet);
+  host.appendChild(node);
+}
+
+document.getElementById("roleSelect").addEventListener("change",function(e){
+  state.role=e.target.value;state.filter="all";
+  try{localStorage.setItem("paragon.role",state.role);}catch(err){}
+  render();
+  toast("Now viewing as "+ROLES[state.role].title+". Access is a preview, not enforced security.");
+});
+document.getElementById("roleSelect").value=state.role;
+
+render();
+})();
+</script>
