@@ -28,15 +28,29 @@ and the decision queue are hidden. Partner capital terms are Managing Director o
 This is a visual preview of the access model, not enforced security. Real enforcement
 needs a backend and authentication.
 
-### Status
+### Data sources
 
-Sample data throughout. Every figure, name and date is illustrative and no external
-system is connected. The reference date is pinned to 11 Sep 2026 so the sample stays
-internally consistent.
+The page now carries two classes of data and labels every block with which it is.
 
-### Next steps, when it is time to connect things
+**From the proforma.** Finance, unit economics, model drivers, the absorption
+timeline and the phase rail are read from `Paragon Cash Flow - TH 7.21.26.xlsx`
+(SharePoint > Communities > Active Communities > Paragon (31st St & Winchcomb) >
+Proformas (formerly known as Budgets), last modified 21 Aug 2026). That workbook is
+the canonical model. One cost line, the fees and carry remainder, is derived as total
+cost less acquisition, horizontal and vertical; it is marked Derived in the table.
 
-1. Replace the `ITEMS`, `DECISIONS`, `MILESTONES` and `LOG` arrays with a data feed
-2. Point the source file rows at real SharePoint and OneDrive URLs
-3. Add authentication and enforce the role model server side
-4. Persist approvals and check-offs so the page holds state between visits
+**Still sample.** Action items, decisions, milestones, consultant names, source file
+rows and the weekly log. Their reference date is pinned to 11 Sep 2026 so the sample
+stays internally consistent.
+
+The sales sheet deliberately shows no per-lot pricing. The canonical model prices all
+eight lots off a single blended average, so a per-lot schedule would have to be
+invented. The gap is shown instead.
+
+### Next steps
+
+1. Persist action items, decisions and the weekly log so the page holds state between
+   visits and across viewers
+2. Point the source file rows at real SharePoint URLs
+3. Supply a per-lot price schedule, the one real input the sales sheet is missing
+4. Add authentication and enforce the role model server side
