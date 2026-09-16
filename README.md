@@ -64,9 +64,17 @@ The sales sheet deliberately shows no per-lot pricing. The canonical model price
 eight lots off a single blended average, so a per-lot schedule would have to be
 invented. The gap is shown instead.
 
+### Account
+
+The board must be published from the Camelot Claude organization, not a personal
+account. Because it declares a shared database it is organization-internal, so
+readers and writers must be members of the owner's organization. See `MIGRATION.md`
+for the runbook, and `tools/build-seed.js` for the seed.
+
 ### Next steps
 
-1. Point the source file rows at real SharePoint URLs
-2. Supply a per-lot price schedule, the one real input the sales sheet is missing
-3. Replace the sample action items, decisions and consultant names with the real ones
-4. Segment read access, which needs authentication and server-side filtering
+1. Republish under the Camelot organization, per MIGRATION.md
+2. Point the source file rows at real SharePoint URLs
+3. Supply a per-lot price schedule, the one real input the sales sheet is missing
+4. Replace the sample action items, decisions and consultant names with the real ones
+5. Segment read access, which needs authentication and server-side filtering
