@@ -19,14 +19,31 @@ Open the file directly in a browser. No build step, no dependencies beyond Googl
 - A weekly accomplishment log, six weeks deep
 - Flags for anything late, blocked, or missing an owner
 
-### Roles
+### The shared board
 
-A role selector switches between Managing Director, Project Manager, and Consultant.
-Consultants see architecture, engineering, construction and the log; finance, sales
-and the decision queue are hidden. Partner capital terms are Managing Director only.
+Action items, decisions and the weekly log are held in the artifact's shared database,
+so edits persist and every viewer sees them. Editors can reassign an owner, change a
+due date, mark an item done or reopen it, approve or send back a decision, and add to
+the weekly log. Changes stream to anyone with the page open.
 
-This is a visual preview of the access model, not enforced security. Real enforcement
-needs a backend and authentication.
+Opened as a local file with no store available, the page falls back to the embedded
+sample and edits stay in that browser for the session. The title block says which mode
+it is in: `Shared, live`, `Shared, view only`, or `Local copy`.
+
+### Roles and access
+
+Two different things, and only one of them is real.
+
+**Write access is enforced.** The database declares `{path: "", read: "interact",
+write: "admin"}`. Anyone who can open the page reads it; only viewers with edit access
+can write. Verified: a write attempted at view level is refused by the server, not by
+the interface.
+
+**Read access is not segmented.** The role selector (Managing Director, Project
+Manager, Consultant) hides sheets and fields in the interface only. Finance and
+partnership figures are in the page source regardless of the selected role. Do not
+send this link to anyone who should not see the partnership economics. Segmented reads
+need authentication and a server that filters before delivery.
 
 ### Data sources
 
@@ -35,8 +52,8 @@ The page now carries two classes of data and labels every block with which it is
 **From the proforma.** Finance, unit economics, model drivers, the absorption
 timeline and the phase rail are read from `Paragon Cash Flow - TH 7.21.26.xlsx`
 (SharePoint > Communities > Active Communities > Paragon (31st St & Winchcomb) >
-Proformas (formerly known as Budgets), last modified 21 Aug 2026). That workbook is
-the canonical model. One cost line, the fees and carry remainder, is derived as total
+Proformas (formerly known as Budgets), last modified 21 Aug 2026). Confirmed
+canonical by Trent Hancock, 16 Sep 2026. One cost line, the fees and carry remainder, is derived as total
 cost less acquisition, horizontal and vertical; it is marked Derived in the table.
 
 **Still sample.** Action items, decisions, milestones, consultant names, source file
@@ -49,8 +66,7 @@ invented. The gap is shown instead.
 
 ### Next steps
 
-1. Persist action items, decisions and the weekly log so the page holds state between
-   visits and across viewers
-2. Point the source file rows at real SharePoint URLs
-3. Supply a per-lot price schedule, the one real input the sales sheet is missing
-4. Add authentication and enforce the role model server side
+1. Point the source file rows at real SharePoint URLs
+2. Supply a per-lot price schedule, the one real input the sales sheet is missing
+3. Replace the sample action items, decisions and consultant names with the real ones
+4. Segment read access, which needs authentication and server-side filtering

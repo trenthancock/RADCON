@@ -323,6 +323,42 @@ table.data tfoot td{font-weight:600;border-top:1px solid var(--rule-strong);bord
 }
 .restricted b{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
 
+/* inline editing */
+.edit-owner,.edit-due{
+  font:inherit;font-size:13px;color:var(--ink);background:transparent;
+  border:none;border-bottom:1px dotted var(--rule-strong);padding:1px 0;max-width:100%;
+  border-radius:0;
+}
+.edit-owner{-webkit-appearance:none;appearance:none;cursor:pointer;padding-right:12px;
+  background-image:linear-gradient(45deg,transparent 50%,var(--ink-mute) 50%),linear-gradient(135deg,var(--ink-mute) 50%,transparent 50%);
+  background-position:right 3px center,right 0 center;background-size:4px 4px,4px 4px;background-repeat:no-repeat;}
+.edit-owner[data-empty="true"]{color:var(--ink-mute);border-bottom-style:dashed}
+.edit-due{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums;width:100%}
+.edit-owner:hover,.edit-due:hover{border-bottom-color:var(--accent)}
+.i-act{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.pill-btn{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 7px;border:1px solid var(--rule-strong);color:var(--ink-mute);background:var(--ground);
+}
+.pill-btn:hover{border-color:var(--accent);color:var(--accent)}
+.pill-btn[data-st="done"]{border-style:dashed}
+.logform{
+  background:var(--surface);border:1px solid var(--rule);padding:14px 15px;
+  display:grid;gap:5px;grid-template-columns:1fr;align-items:end;
+}
+@media (min-width:760px){
+  .logform{grid-template-columns:auto 1fr auto auto;gap:6px 14px}
+  .logform label{grid-row:1}
+  .logform select,.logform input,.logform button{grid-row:2}
+}
+.logform label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute)}
+.logform select,.logform input{
+  font:inherit;font-size:13.5px;color:var(--ink);background:var(--ground);
+  border:1px solid var(--rule-strong);padding:7px 9px;border-radius:0;min-width:0;
+}
+.logform input:focus,.logform select:focus{border-color:var(--accent);outline-offset:1px}
+.logform button{padding:8px 14px}
+
 /* provenance */
 .prov{
   font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
@@ -633,7 +669,7 @@ function money(n){
 }
 function dollars(n){return "$"+n.toLocaleString("en-US");}
 function statusOf(it){
-  if(it.st==="done")return "done";
+  if(it.done)return "done";
   if(it.st==="blocked")return "blocked";
   var dd=days(TODAY,it.due);
   if(dd<0)return "late";
@@ -642,7 +678,7 @@ function statusOf(it){
 }
 function dueLabel(it){
   var dd=days(TODAY,it.due);
-  if(it.st==="done")return "Complete";
+  if(it.done)return "Complete";
   if(dd<0)return "Late by "+Math.abs(dd)+(Math.abs(dd)===1?" day":" days");
   if(dd===0)return "Due today";
   if(dd===1)return "Due tomorrow";
@@ -651,6 +687,18 @@ function dueLabel(it){
 var ST_LABEL={late:"Late",blocked:"Blocked",soon:"Due soon",open:"On track",done:"Complete"};
 
 /* --------------------------- state ----------------------------- */
+/* STATE holds the working copy. It starts from the embedded sample so the
+   page renders at once and the repo file works standalone; when the shared
+   store resolves it is replaced by live data and every edit is written back. */
+var STATE={items:ITEMS.slice(),decisions:DECISIONS.slice(),log:LOG.slice(),
+           live:false,writable:true,pending:0};
+var DB=null;
+
+var PEOPLE_LIST=["T. Hancock","A. Dodge","M. Ruiz","D. Alvarez","P. Nakagawa",
+                 "R. Ellsworth","T. Boone","S. Whitfield","J. Okafor","L. Pike","Camelot Finance"];
+var FIRM_OF={};
+ITEMS.forEach(function(i){if(i.o&&i.firm)FIRM_OF[i.o]=i.firm;});
+
 var state={role:"md",sheet:"G",filter:"all"};
 try{
   var saved=localStorage.getItem("paragon.role");
@@ -660,7 +708,7 @@ try{
 function role(){return ROLES[state.role];}
 function visibleItems(){
   var allowed=role().sheets;
-  return ITEMS.filter(function(it){return allowed.indexOf(it.d)>-1;});
+  return STATE.items.filter(function(it){return allowed.indexOf(it.d)>-1;});
 }
 function toast(msg){
   var t=document.getElementById("toast");
@@ -678,9 +726,9 @@ function renderTitleMeta(){
     ["Homes","8 units, 2,387 sf avg"],
     ["Revenue","$14.44M"],
     ["As of",fmtDate(TODAY)],
-    ["Action items",String(v.filter(function(i){return statusOf(i)!=="done";}).length)+" open"],
+    ["Action items",String(v.filter(function(i){return !i.done;}).length)+" of "+v.length+" open"],
     ["Late",String(late)],
-    ["Net profit","$2.06M"]
+    ["Board",STATE.live?(STATE.writable?"Shared, live":"Shared, view only"):"Local copy"]
   ];
   var dl=document.getElementById("tbMeta");
   dl.innerHTML="";
@@ -704,7 +752,7 @@ function renderIndex(){
     b.setAttribute("aria-current",state.sheet===k?"true":"false");
     b.innerHTML='<span class="code">'+d.code+'</span><span class="name">'+d.name+'</span>';
     if(k!=="G"&&k!=="L"){
-      var lateN=ITEMS.filter(function(i){return i.d===k&&statusOf(i)==="late";}).length;
+      var lateN=STATE.items.filter(function(i){return i.d===k&&statusOf(i)==="late";}).length;
       if(lateN)b.innerHTML+='<span class="idx-flag">'+lateN+'</span>';
     }
     b.addEventListener("click",function(){state.sheet=k;state.filter="all";render();});
@@ -746,19 +794,58 @@ function itemsBlock(items,opts){
     row.appendChild(title);
 
     var owner=el("div","i-owner");
-    if(it.o){
-      owner.innerHTML=it.o+(it.firm?'<span class="firm">'+it.firm+'</span>':"");
+    if(canEdit()){
+      var sel=el("select","edit-owner");
+      sel.id="own-"+it.id;
+      sel.setAttribute("aria-label","Owner of "+it.t);
+      var opts=['<option value="">No owner</option>'];
+      PEOPLE_LIST.forEach(function(n){
+        opts.push('<option value="'+n+'"'+(n===it.o?" selected":"")+'>'+n+'</option>');
+      });
+      sel.innerHTML=opts.join("");
+      if(!it.o)sel.setAttribute("data-empty","true");
+      sel.addEventListener("change",function(){
+        var v=sel.value;
+        saveItem(it.id,{o:v||null,firm:v?(FIRM_OF[v]||null):null});
+      });
+      owner.appendChild(sel);
+      if(it.firm)owner.appendChild(el("span","firm",it.firm));
     }else{
-      owner.innerHTML='<span class="noowner">No owner</span>';
+      owner.innerHTML=it.o?(it.o+(it.firm?'<span class="firm">'+it.firm+'</span>':""))
+                          :'<span class="noowner">No owner</span>';
     }
     row.appendChild(owner);
 
     var due=el("div","i-due");
-    due.innerHTML=shortDate(it.due)+'<span>'+dueLabel(it)+'</span>';
+    if(canEdit()){
+      var di=el("input","edit-due");
+      di.type="date";di.value=it.due;di.id="due-"+it.id;
+      di.setAttribute("aria-label","Due date for "+it.t);
+      di.addEventListener("change",function(){
+        if(di.value)saveItem(it.id,{due:di.value});
+      });
+      due.appendChild(di);
+      due.appendChild(el("span",null,dueLabel(it)));
+    }else{
+      due.innerHTML=shortDate(it.due)+'<span>'+dueLabel(it)+'</span>';
+    }
     row.appendChild(due);
 
-    var pill=el("div");
-    pill.innerHTML='<span class="pill" data-st="'+st+'">'+ST_LABEL[st]+'</span>';
+    var pill=el("div","i-act");
+    if(canEdit()){
+      var tog=el("button","pill-btn");
+      tog.type="button";
+      tog.setAttribute("data-st",st);
+      tog.textContent=st==="done"?"Reopen":"Mark done";
+      tog.setAttribute("aria-label",(st==="done"?"Reopen ":"Mark done ")+it.t);
+      tog.addEventListener("click",function(){
+        saveItem(it.id,{done:st!=="done"});
+      });
+      pill.innerHTML='<span class="pill" data-st="'+st+'">'+ST_LABEL[st]+'</span>';
+      pill.appendChild(tog);
+    }else{
+      pill.innerHTML='<span class="pill" data-st="'+st+'">'+ST_LABEL[st]+'</span>';
+    }
     row.appendChild(pill);
 
     if(it.note){
@@ -845,7 +932,7 @@ function renderOverview(){
   var v=visibleItems();
   var late=v.filter(function(i){return statusOf(i)==="late";});
   var blocked=v.filter(function(i){return statusOf(i)==="blocked";});
-  var unowned=v.filter(function(i){return !i.o&&i.st!=="done";});
+  var unowned=v.filter(function(i){return !i.o&&!i.done;});
   var soon=v.filter(function(i){return statusOf(i)==="soon";});
 
   var ab=el("div","block");
@@ -871,11 +958,13 @@ function renderOverview(){
 
   /* decisions */
   if(state.role!=="consultant"){
-    var decs=DECISIONS.slice().sort(function(a,b){return a.due<b.due?-1:1;});
+    var decs=STATE.decisions.filter(function(d){return d.status!=="approved";})
+              .sort(function(a,b){return a.due<b.due?-1:1;});
+    var settled=STATE.decisions.length-decs.length;
     var db=el("div","block");
     var dh=el("div","blockhead");
     dh.appendChild(el("h3",null,"Decisions awaiting approval"));
-    dh.appendChild(el("span","count",decs.length+" open, 1 past due"));
+    dh.appendChild(el("span","count",decs.length+" awaiting"+(settled?", "+settled+" settled":"")));
     dh.appendChild(provChip("sample"));
     db.appendChild(dh);
     var dbox=el("div","decisions");
@@ -895,17 +984,29 @@ function renderOverview(){
       meta.innerHTML='<span>Decider <b>'+d.decider+'</b></span><span>Impact <b>'+d.impact+'</b></span>'+
         '<span>Sheet <b>'+DISC[d.d].code+'</b></span>';
       row.appendChild(meta);
+      if(d.status==="sent_back"){
+        var sb=el("div","i-note");
+        sb.innerHTML='<b>Sent back</b> '+(d.decidedNote||"Returned for more work.");
+        row.appendChild(sb);
+      }
       var act=el("div","dec-act");
-      if(role().canApprove){
+      if(role().canApprove&&STATE.writable){
         var ap=el("button","btn","Approve");
         ap.type="button";
-        ap.addEventListener("click",function(){toast("Approvals are recorded once the project systems are connected.");});
-        var hold=el("button","btn ghost","Send back");
+        ap.addEventListener("click",function(){
+          saveDecision(d.id,{status:"approved",decidedAt:TODAY,decidedBy:role().short});
+          toast("Approved. "+d.t+" is off the queue.");
+        });
+        var hold=el("button","btn ghost",d.status==="sent_back"?"Sent back":"Send back");
         hold.type="button";
-        hold.addEventListener("click",function(){toast("Send-back routing is set up when the project systems are connected.");});
+        hold.addEventListener("click",function(){
+          saveDecision(d.id,{status:"sent_back",decidedAt:TODAY,decidedBy:role().short,
+                             decidedNote:"Returned by "+role().short+" on "+fmtDate(TODAY)+"."});
+          toast("Sent back. It stays on the queue until it is resubmitted.");
+        });
         act.appendChild(ap);act.appendChild(hold);
       }else{
-        var w=el("button","btn","Awaiting T. Hancock");
+        var w=el("button","btn",STATE.writable?"Awaiting T. Hancock":"View access only");
         w.type="button";w.disabled=true;
         act.appendChild(w);
       }
@@ -954,7 +1055,7 @@ function renderOverview(){
 /* -------- Discipline sheets -------- */
 function renderDiscipline(key){
   var s=el("section","sheet");
-  var items=ITEMS.filter(function(i){return i.d===key;});
+  var items=STATE.items.filter(function(i){return i.d===key;});
   var lateN=items.filter(function(i){return statusOf(i)==="late";}).length;
   s.appendChild(sheetHead(key,items.length+" items, "+lateN+" late"));
 
@@ -1173,7 +1274,7 @@ function renderLog(){
   h.appendChild(provChip("sample"));
   wrap.appendChild(h);
   var box=el("div");
-  LOG.forEach(function(w){
+  STATE.log.forEach(function(w){
     var entries=w.entries.filter(function(e){return allowed.indexOf(e.d)>-1;});
     if(!entries.length)return;
     var c=el("div","week");
@@ -1192,8 +1293,129 @@ function renderLog(){
   });
   wrap.appendChild(box);
   s.appendChild(wrap);
+
+  if(canEdit()){
+    var fb=el("div","block");
+    var fh=el("div","blockhead");
+    fh.appendChild(el("h3",null,"Log an accomplishment"));
+    fh.appendChild(el("span","count","Goes to the week ending "+fmtDate(weekEnding())));
+    fb.appendChild(fh);
+    var form=el("form","logform");
+    form.innerHTML=
+      '<label for="logDisc">Discipline</label>'+
+      '<select id="logDisc">'+["A","S","C","F","M"].filter(function(k){return allowed.indexOf(k)>-1;})
+        .map(function(k){return '<option value="'+k+'">'+DISC[k].code+" "+DISC[k].name+'</option>';}).join("")+'</select>'+
+      '<label for="logText">What happened</label>'+
+      '<input id="logText" type="text" maxlength="180" placeholder="Mass grading subcontract awarded." required>'+
+      '<label for="logWho">Who</label>'+
+      '<input id="logWho" type="text" maxlength="60" value="'+role().short+'">'+
+      '<button class="btn" type="submit">Add to log</button>';
+    form.addEventListener("submit",function(ev){
+      ev.preventDefault();
+      var t=form.querySelector("#logText").value.trim();
+      if(!t){toast("Write what happened before adding it to the log.");return;}
+      saveLogEntry(weekEnding(),{
+        d:form.querySelector("#logDisc").value,
+        t:t,
+        who:form.querySelector("#logWho").value.trim()||role().short
+      });
+      toast("Added to the week ending "+fmtDate(weekEnding())+".");
+    });
+    fb.appendChild(form);
+    s.appendChild(fb);
+  }
   return s;
 }
+
+/* Friday of the current sample week. */
+function weekEnding(){
+  var d=new Date(TODAY+"T00:00:00Z");
+  d.setUTCDate(d.getUTCDate()+((5-d.getUTCDay())+7)%7);
+  return d.toISOString().slice(0,10);
+}
+
+/* --------------------------- store ----------------------------- */
+function byDue(a,b){return a.due<b.due?-1:1;}
+
+function connectStore(){
+  if(!window.claude||!claude.use)return;
+  claude.use("db").then(function(db){
+    if(!db)return;                       /* not served, not granted, or offline file */
+    DB=db;
+    var got={items:false,decisions:false,log:false};
+    function mark(k){got[k]=true;if(got.items&&got.decisions&&got.log){STATE.live=true;}render();}
+
+    db.collection("items").onSnapshot(function(snap){
+      if(snap.size)STATE.items=snap.docs.map(function(d){return d.data();}).sort(byDue);
+      mark("items");
+    },storeError);
+    db.collection("decisions").onSnapshot(function(snap){
+      if(snap.size)STATE.decisions=snap.docs.map(function(d){return d.data();});
+      mark("decisions");
+    },storeError);
+    db.collection("log").onSnapshot(function(snap){
+      if(snap.size)STATE.log=snap.docs.map(function(d){return d.data();})
+        .sort(function(a,b){return a.we<b.we?1:-1;});
+      mark("log");
+    },storeError);
+  });
+}
+function storeError(e){
+  STATE.live=false;render();
+  toast(e&&e.code==="revoked"
+    ? "Shared access ended for this session. Showing the last data loaded."
+    : "Lost the connection to shared data. Showing the last data loaded.");
+}
+function writeFail(e){
+  STATE.pending=Math.max(0,STATE.pending-1);
+  if(e&&e.code==="invalid_argument"){
+    STATE.writable=false;render();
+    toast("You have view access to this board. Ask Trent for edit access to make changes.");
+  }else if(e&&e.code==="resource_exhausted"){
+    toast("Too many changes at once. Wait a moment and try again.");
+  }else{
+    toast("That change did not save. Try again.");
+  }
+}
+
+/* Every edit goes through here: optimistic locally, written to the store when
+   one is connected. Without a store the page still works, changes just stay
+   in this browser for the session. */
+function saveItem(id,patch){
+  var i=findIn(STATE.items,id); if(!i)return;
+  Object.keys(patch).forEach(function(k){i[k]=patch[k];});
+  render();
+  if(!DB)return;
+  STATE.pending++;
+  DB.doc("items/"+id).set(plain(i)).then(function(){STATE.pending--;},writeFail);
+}
+function saveDecision(id,patch){
+  var d=findIn(STATE.decisions,id); if(!d)return;
+  Object.keys(patch).forEach(function(k){d[k]=patch[k];});
+  render();
+  if(!DB)return;
+  STATE.pending++;
+  DB.doc("decisions/"+id).set(plain(d)).then(function(){STATE.pending--;},writeFail);
+}
+function saveLogEntry(we,entry){
+  var w=null;
+  STATE.log.forEach(function(x){if(x.we===we)w=x;});
+  if(!w){w={we:we,entries:[]};STATE.log.unshift(w);}
+  w.entries=w.entries.concat([entry]);
+  render();
+  if(!DB)return;
+  STATE.pending++;
+  DB.doc("log/"+we).set({we:w.we,entries:w.entries}).then(function(){STATE.pending--;},writeFail);
+}
+/* Whole-document write. set creates the document if it is absent, so a
+   missing seed row can never be mistaken for a permission denial. */
+function plain(o){
+  var out={};
+  Object.keys(o).forEach(function(k){if(o[k]!==undefined)out[k]=o[k];});
+  return out;
+}
+function findIn(arr,id){var f=null;arr.forEach(function(x){if(x.id===id)f=x;});return f;}
+function canEdit(){return STATE.writable&&state.role!=="consultant";}
 
 /* --------------------------- render ---------------------------- */
 function render(){
@@ -1218,5 +1440,6 @@ document.getElementById("roleSelect").addEventListener("change",function(e){
 document.getElementById("roleSelect").value=state.role;
 
 render();
+connectStore();
 })();
 </script>
